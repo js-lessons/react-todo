@@ -7,6 +7,9 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+
+require('es5-shim');
+
 var React = require('react');
 
 var TodoApp = require('./components/TodoApp.react');
