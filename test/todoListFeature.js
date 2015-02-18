@@ -10,33 +10,46 @@ describe('TODO app', function() {
   var TODO_ITEM_THREE = 'book a doctors appointment';
 
   before(function() {
-    casper.start('http://127.0.0.1:8080/');
+    casper.start();
   });
+
+  after(function() {
+    casper.exit();
+  })
+
+  beforeEach(function() {
+    casper.open('http://127.0.0.1:8080/');
+  });
+
 
   describe('When page is initially opened', function () {
     it('should focus on the todo input field', function () {
-      testOps.assertFocussedElementId('new-todo');
+      casper.then(function() { testOps.assertFocussedElementId('new-todo'); })
     });
   });
 
   describe('No Todos', function () {
     it('should hide #main and #footer', function () {
-      testOps.assertItemCount(0);
-      testOps.assertMainSectionIsHidden();
-      testOps.assertFooterIsHidden();
+      casper.then(function() {
+        testOps.assertItemCount(0);
+        testOps.assertMainSectionIsHidden();
+        testOps.assertFooterIsHidden();
+      });
     });
   });
 
   describe('New Todo', function () {
     it('should allow me to add todo items', function () {
-      page.enterItem(TODO_ITEM_ONE);
-      testOps.assertItems([TODO_ITEM_ONE]);
+      casper.then(function() {
+        page.enterItem(TODO_ITEM_ONE);
+        testOps.assertItems([TODO_ITEM_ONE]);
 
-      page.enterItem(TODO_ITEM_TWO);
-      testOps.assertItems([TODO_ITEM_ONE, TODO_ITEM_TWO]);
+        page.enterItem(TODO_ITEM_TWO);
+        testOps.assertItems([TODO_ITEM_ONE, TODO_ITEM_TWO]);
+      })
     });
 
-    xit('should clear text input field when an item is added', function () {
+    it('should clear text input field when an item is added', function () {
       page.enterItem(TODO_ITEM_ONE);
       testOps.assertItemInputFieldText('');
     });
