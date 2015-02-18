@@ -10,14 +10,6 @@ describe('TODO app', function() {
   var TODO_ITEM_THREE = 'book a doctors appointment';
 
   before(function() {
-    casper.on("page.error", function(msg, trace) {
-      this.echo("Error:    " + msg, "ERROR");
-      this.echo("file:     " + trace[0].file, "WARNING");
-      this.echo("line:     " + trace[0].line, "WARNING");
-      this.echo("function: " + trace[0]["function"], "WARNING");
-      errors.push(msg);
-    });
-
     casper.start('http://127.0.0.1:8080/');
   });
 
@@ -39,6 +31,9 @@ describe('TODO app', function() {
     it('should allow me to add todo items', function () {
       page.enterItem(TODO_ITEM_ONE);
       testOps.assertItems([TODO_ITEM_ONE]);
+
+      page.enterItem(TODO_ITEM_TWO);
+      testOps.assertItems([TODO_ITEM_ONE, TODO_ITEM_TWO]);
     });
 
     xit('should clear text input field when an item is added', function () {

@@ -1,5 +1,3 @@
-var map = Function.call.bind(Array.prototype.map);
-
 function Page(casper) {
   this.casper = casper;
 }
@@ -41,13 +39,11 @@ Page.prototype = {
   },
 
   getItems: function() {
-    var labels = this.casper.evaluate(function() {
-      return document.querySelectorAll('#todo-list li label');
+    return this.casper.evaluate(function() {
+      return Array.prototype.map.call(document.querySelectorAll('#todo-list li label'), function(l) {
+        return l.textContent;
+      });
     });
-
-    console.log(labels[1])
-
-    return map(labels, function(l) { return l.textContent });
   }
 }
 
