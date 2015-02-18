@@ -3,6 +3,20 @@ function Page(casper) {
 }
 
 Page.prototype = {
+  _isVisible: function(selector) {
+    return this.casper.evaluate(function(selector) {
+      var el = document.querySelector(selector);
+      return el ? el.offsetParent !== null : false;
+    }, selector);
+  },
+
+  _isHidden: function(selector) {
+    return this.casper.evaluate(function(selector) {
+      var el = document.querySelector(selector);
+      return el ? el.offsetParent === null : true;
+    }, selector);
+  },
+
   getFocussedElementId: function() {
     return this.casper.evaluate(function() {
       return document.activeElement ? document.activeElement.id : '';
